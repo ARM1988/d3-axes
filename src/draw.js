@@ -35,6 +35,10 @@ async function draw () {
 
   const xAxis = d3.axisBottom()
     .scale(xScale)
+    .tickSizeInner(5)
+    .tickSizeOuter(0)
+    .tickValues(['Germany', "United States"])
+    .tickPadding(5)
   
   svg.append('g')
     .attr('transform', 'translate(0,' + (height - marginBottom) + ')')
@@ -46,10 +50,27 @@ async function draw () {
   
   const yAxis = d3.axisLeft()
     .scale(yScale)
+    // .tickFormat(d3.format("~s"))
+    // .tickValues([800, 1400])
+    // .ticks(5)
+    .ticks(20, "~s")
+    // .tickArguments([5])
   
   svg.append('g')
+    .attr('class', 'y-axis')
     .attr('transform', 'translate(' + marginLeft + ', 0)')
     .call(yAxis)
+
+  const yGrid = d3.axisLeft()
+    .scale(yScale)
+    .tickFormat('')
+    .ticks(5)
+    .tickSizeInner(-width + marginLeft + marginRight)
+
+  svg.append('g')
+    .attr('class', 'y-grid')
+    .attr('transform', 'translate(' + marginLeft + ', 0)')
+    .call(yGrid)
   
   svg
     .selectAll('rect')
